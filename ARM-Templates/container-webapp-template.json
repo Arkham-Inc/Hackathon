@@ -3,11 +3,11 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "webAppName": {
-            "defaultValue": "Arkham-devops-dev",
+            "defaultValue": "Arkhamdevops-dev",
             "type": "String"
         },
         "hostingPlanName": {
-            "defaultValue": "Arkham-devops-asp",
+            "defaultValue": "Arkhamdevops-asp",
             "type": "String"
         },
         "appInsightsLocation": {
@@ -15,7 +15,7 @@
             "type": "String"
         },
         "appInsightsName": {
-            "defaultValue": "Arkham-devops-ai",
+            "defaultValue": "Arkhamdevops-ai",
             "type": "String"
         },        
         "sku": {
@@ -23,11 +23,11 @@
             "type": "String"
         },
         "registryName": {
-            "defaultValue": "Arkham-devopsreg",
+            "defaultValue": "Arkhamdevopsreg",
             "type": "String"
         },
         "imageName": {
-            "defaultValue": "Arkham-devopsimage",
+            "defaultValue": "Arkhamdevopsimage",
             "type":"String"
         },
         "registryLocation": {
