@@ -1,1 +1,23 @@
+name: "Deploy"
 
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-to-test:
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.5.0
+      - name: Azure Login
+        uses: Azure/login@v1.4.6
+        with:
+          creds: '{"clientId":"${{ secrets.GUID }}","clientSecret":"${{ secrets.ARKHAMSECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1.0.8
+        with:
+          scope: resourcegroup
+          resourceGroupName: "jasonpovall"
+          template: "ARM-Templates/container-webapp-template.json"
+          deploymentMode: Incremental
