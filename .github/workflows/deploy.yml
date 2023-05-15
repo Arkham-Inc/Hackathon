@@ -1,31 +1,35 @@
 name: Deploy Azure Resource Manager (ARM) Template
 
 on:
-  push:
-    branches:
-      - main
+push:
+branches:
+- main
 
 jobs:
-  deploy-arm-template:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+deploy-arm-template:
+runs-on: ubuntu-latest
+steps:
+- name: Checkout repository
+uses: actions/checkout@v2
 
-      - name: Configure Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
-      - name: Deploy ARM Template
-        uses: azure/arm-deploy@v1
-        with:
-          resource_group_name: jasonpovall
-          template_file: container-webapp-template.json
-          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  - name: Install Node.js
+    run: |
+      curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      sudo apt-get install -y nodejs
 
-      - name: Log output
-        run: echo ${{ steps.deploy-arm-template.outputs.output }}
+  - name: Configure Azure
+    uses: azure/login@v1
+    with:
+      client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      tenant_id: ${{ secrets.AZURE_TENANT_ID }}
 
+  - name: Deploy ARM Template
+    run: |
+      npm install -g azure-cli
+      azure login
+      azure arm deploy --resource-group my-resource-group --template-file azure-rm-template.json --subscription-id ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  - name: Log output
+    run: echo ${{ steps.deploy-arm-template.outputs.output }}
