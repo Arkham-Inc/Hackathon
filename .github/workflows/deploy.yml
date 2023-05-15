@@ -1,1 +1,31 @@
+name: Deploy Azure Resource Manager (ARM) Template
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-arm-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Configure Azure
+        uses: azure/login@v1
+        with:
+          client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+
+      - name: Deploy ARM Template
+        uses: azure/arm-deploy@v1
+        with:
+          resource_group_name: jasonpovall
+          template_file: container-webapp-template.json
+          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log output
+        run: echo ${{ steps.deploy-arm-template.outputs.output }}
 
