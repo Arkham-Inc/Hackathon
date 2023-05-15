@@ -5,9 +5,9 @@ name: .NET
 
 on:
   push:
-    branches: [ "/Application" ]
+    branches: [ "/Application/" ]
   pull_request:
-    branches: [ "/Application" ]
+    branches: [ "/Application/" ]
 
 jobs:
   build:
